@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% from "button/macro.njk" import button %}
+{% from "card/macro.njk" import card %}
+{% from "back-link/macro.njk" import backLink %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "/login-creds",
+    text: "Back to login"
+    })
+  }}
+{% endblock %}
+
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-two-thirds">
+
+      <h1 class="nhsuk-heading-xl">You have a MyChristie account</h1>
+      <p>You have a MyChristie account for <strong>jane.doe@example.com</strong>.</p>
+
+      {{ button({
+        text: "Continue to login",
+        name: "continuebutton",
+        href: "/login-creds"
+      }) }}
+
+{% endblock %}

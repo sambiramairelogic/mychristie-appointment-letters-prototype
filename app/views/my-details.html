@@ -1,0 +1,120 @@
+{% extends "layout.html" %}
+
+{% from "button/macro.njk" import button %}
+{% from "inset-text/macro.njk" import insetText %}
+{% from "summary-list/macro.njk" import summaryList %}
+{% from "checkboxes/macro.njk" import checkboxes %}
+{% from "button/macro.njk" import button %}
+{% from "tag/macro.njk" import tag %}
+{% from "action-link/macro.njk" import actionLink %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <h1 class="nhsuk-heading-xl">My details</h1>
+
+      {% set insetTextHtml %}
+        <p>If you have not updated your personal details in a while, visit <a> Christie Contact and Services Form</a>.</p>
+      {% endset %}
+
+      {{ insetText({
+        html: insetTextHtml | safe
+      }) }}
+
+      {{ summaryList({
+        rows: [
+          {
+            key: {
+              text: "Name"
+            },
+            value: {
+              text: "Jane Doe"
+            }
+          },
+          {
+            key: {
+              text: "Mobile"
+            },
+            value: {
+              text: "07123456789"
+            }
+          },
+          {
+            key: {
+              text: "Email"
+            },
+            value: {
+              text: "jane.doe@email.com"
+            }
+          },
+          {
+            key: {
+              text: "Password"
+            },
+            value: {
+              text: "•••••••••••"
+            },
+                actions: {
+                  items: [
+                    {
+                      href: "/change-password-pg1",
+                      text: "Change",
+                      visuallyHiddenText: "password"
+                    }
+                  ]
+                }
+          }
+        ]
+      }) }}
+      
+      <h2 class="nhsuk-heading-l">Two-factor authentication</h2>
+      <p>Two-Factor Authentication adds an extra layer of security to your account. You will be asked to enter a code when you sign in.</p>
+
+      {% set insetText2faHtml %}
+        <p>Text message Two-Factor Authentication is enabled by default and cannot be disabled.</p>
+      {% endset %}
+
+      {{ insetText({
+        html: insetText2faHtml | safe
+      }) }}
+
+      {{ summaryList({
+        rows: [
+          {
+            key: {
+              text: "Authenticator app"
+            },
+            value: {
+              html: tag({
+              text: "Not configured",
+              classes: "nhsuk-tag--yellow"
+              })
+            },
+            actions: {
+              items: [
+                {
+                  href: "/configure-auth-pg1",
+                  text: "Configure",
+                  visuallyHiddenText: "configureAuth"
+                }
+              ]
+            }
+          }
+        ]
+      }) }}
+
+
+      <h2 class="nhsuk-heading-l">Contact preferences</h2>
+      <p>Placeholder - Information about contact preferences.</p>  
+
+      {{ button({
+        text: "Update your contact preferences",
+        href: "/contact-preferences"
+      }) }}
+
+    </div>
+  </div>
+{% endblock %}

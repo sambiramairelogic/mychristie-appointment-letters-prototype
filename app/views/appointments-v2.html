@@ -1,0 +1,245 @@
+{% extends "layout.html" %}
+
+{% from "breadcrumb/macro.njk" import breadcrumb %}
+{% from "button/macro.njk" import button %}
+{% from "inset-text/macro.njk" import insetText %}
+{% from "action-link/macro.njk" import actionLink %}
+{% from "tabs/macro.njk" import tabs %}
+{% from "tables/macro.njk" import table %}
+{% from "checkboxes/macro.njk" import checkboxes %}
+{% from "card/macro.njk" import card %}
+{% from "details/macro.njk" import details %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+      {% set upcomingAppointments = [
+        { service: "Clinical Oncology", date: "Wednesday 4th August 2026", altDate: "2026-09-04", time: "11:00am", location: "Oak Rd Treatment Centre (Dept 1)", type: "Follow up", slug: "careflow", status: "Active" },
+        { service: "Radiology", date: "Wednesday 11th August 2026", altDate: "2026-09-11", time: "9:00am", location: "Oak Rd Treatment Centre (Dept 1)", type: "CT scan", slug: "cris", status: "Active" },
+        { service: "Radiotherapy - single phone only", date: "Monday 17th August 2026", altDate: "2026-09-17", time: "8:00am", location: "Telephone consultation only", type: "Telephone consultation", slug: "mosaiq-single-phone", status: "Active" },
+        { service: "Radio/Brachy - day schedule original", date: "Friday 21st August 2026", altDate: "2026-09-21", time: "9:00am", location: "Oak Rd Treatment Centre (Dept 1)", type: "Treatment", slug: "mosaiq-schedule-times", status: "Active" },
+        { service: "Radio/Brachy - day schedule", date: "Monday 24th August 2026", altDate: "2026-09-24", time: "9:00am", location: "Oak Rd Treatment Centre (Dept 1)", type: "Treatment", slug: "mosaiq-schedule-activity", status: "Active" },
+        { service: "Radiotherapy - single", date: "Tuesday 3rd September 2026", altDate: "2026-09-30", time: "8:00am", location: "Oak Rd Treatment Centre (Dept 1)",type: "Treatment", slug: "mosaiq-single-f2f", status: "Active" },
+        { service: "Clinical Oncology", date: "Friday 25th September 2026", altDate: "2026-09-25", time: "8:00am", location: "Oak Rd Treatment Centre (Dept 1)",type: "Treatment", slug: "cancelled-cf", status: "Cancelled" },
+        { service: "Radiology/Radiotherapy - single", date: "Monday 28th September 2026", altDate: "2026-09-28", time: "8:00am", location: "Oak Rd Treatment Centre (Dept 1)",type: "Treatment", slug: "cancelled", status: "Cancelled" },
+        { service: "Radiotherapy - schedule v1", date: "Wednesday 30th September 2026", altDate: "2026-09-30", time: "8:00am", location: "Oak Rd Treatment Centre (Dept 1)",type: "Treatment", slug: "cancelled-mosaiq-v1", status: "Cancelled" },
+        { service: "Radiotherapy - schedule v2", date: "Wednesday 30th September 2026", altDate: "2026-09-30", time: "8:00am", location: "Oak Rd Treatment Centre (Dept 1)",type: "Treatment", slug: "cancelled-mosaiq-v2", status: "Cancelled" }
+      ] %}
+      {% set pastAppointments = [
+        { service: "Clinical Oncology", date: "Wednesday 29th July 2026", altDate: "2026-07-29", time: "10:00am", location: "Oak Rd Treatment Centre (Dept 1)", type: "Follow up", slug: "careflow", status: "Active" },
+        { service: "Radiology", date: "Monday 15th June 2026", altDate: "2026-06-15", time: "9:00am", location: "Oak Rd Treatment Centre (Dept 1)", type: "CT scan", slug: "cris", status: "Active" },
+        { service: "Radiotherapy - single phone only", date: "Friday 5th June 2026", altDate: "2026-06-05", time: "8:00am", location: "Telephone consultation only", type: "Telephone consultation", slug: "mosaiq-single-phone", status: "Active" },
+        { service: "Clinical Oncology", date: "Saturday 2nd May 2026", altDate: "2026-05-02", time: "9:00am", location: "Oak Rd Treatment Centre (Dept 1)", type: "Treatment", slug: "mosaiq-schedule-times", status: "Active" },
+        { service: "Urology", date: "Monday 24th April 2026", altDate: "2026-04-24", time: "2:00pm", location: "Oak Rd Treatment Centre (Dept 1)", type: "Treatment", slug: "mosaiq-schedule-activity", status: "Active" },
+        { service: "Clinical Oncology", date: "Tuesday 14th April 2026", altDate: "2026-04-14", time: "9:00am", location: "Oak Rd Treatment Centre (Dept 1)", type: "Treatment", slug: "mosaiq-single-f2f", status: "Active" }
+      ] %}
+    {% set checkboxFilters = [
+      { value: "clinical oncology", text: "Clinical Oncology" },
+      { value: "radiology", text: "Radiology" },
+      { value: "interventional radiology", text: "Interventional Radiology" },
+      { value: "radiotherapy", text: "Radiotherapy" },
+      { value: "brachytherapy", text: "Brachytherapy" }
+    ] %}
+
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <h1 class="nhsuk-heading-xl">My appointments</h1>
+      <p>View your upcoming and past clinic visits, scans, and treatment appointments. <br/><br/>
+        Some appointments will be sent by letter. Check your appointment letters or any other information we sent you.</p>
+
+      {% set insetTextHtml %}
+      <p>Your appointment details may change up to 24 hours before. Check this page regularly for updates. <br/><br/>
+        If you have an upcoming appointment that is not shown here or in a letter, contact your care team.</p>
+      {% endset %}
+
+
+      {{ insetText({
+        html: insetTextHtml | safe
+      }) }}
+
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+        {% call details({
+          summaryText: "Filter your appointments",
+          classes: "nhsuk-expander"
+        }) %}
+          {{ checkboxes({
+            idPrefix: "cancelled",
+            name: "cancelled",
+            fieldset: {
+              legend: {
+                text: "See your cancelled appointments",
+                size: "s",
+                isPageHeading: true
+              }
+            },
+            items: [
+              {
+                value: "showCanUp",
+                text: "Show cancelled appointments"
+              }
+            ]
+          }) }}
+
+            {% set checkboxFiltersLoop = [] %}
+            {% for item in checkboxFilters%}
+              {% set checkboxFiltersLoop = (checkboxFiltersLoop.concat({
+                value: item.value,
+                text: item.text
+              })) %}
+            {% endfor %}
+
+            {{ checkboxes({
+              idPrefix: "specialty",
+              name: "specialty",
+              fieldset: {
+                legend: {
+                  text: "Filter your appointments by specialty",
+                  size: "s",
+                  isPageHeading: true
+                }
+              },
+              hint: {
+                text: "Select 1 or more specialty, or leave empty to show all."
+              },
+              items: checkboxFiltersLoop
+            }) }}
+
+            <div class="nhsuk-button-group nhsuk-button-group--small">
+              {{ button({
+                text: "Apply filters",
+                classes: "nhsuk-button--small"
+              }) }}
+
+              {{ button({
+                text: "Clear filters",
+                classes: "nhsuk-button--secondary nhsuk-button--small"              }) }}
+            </div>
+
+        {% endcall %}
+          </div>
+        </div>
+
+      {% set upcomingContent%}
+        <h2 class="nhsuk-heading-l">Upcoming appointments</h2>
+
+        <ul class="nhsuk-grid-row nhsuk-card-group">
+            {% for item in upcomingAppointments %}
+              <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+
+                {% set cardDescriptionHtmlUpcoming %}
+                {% if item.status == "Cancelled" %}
+                  <p>
+                  <strong class="nhsuk-tag nhsuk-tag--red">Cancelled</strong>
+                  </p>
+                  <p>
+                  <strong>Date:</strong> {{ item.date }}<br />
+                  <hr class="nhsuk-u-margin-bottom-3 nhsuk-u-margin-top-0">
+                  <strong>Time:</strong> {{ item.time }}<br />
+                  <hr class="nhsuk-u-margin-bottom-3 nhsuk-u-margin-top-0">
+                  <strong>Location:</strong> {{item.location}} <br />
+                  <hr class="nhsuk-u-margin-bottom-3 nhsuk-u-margin-top-0">
+                  <strong>Appointment type:</strong> {{ item.type }}
+                  <hr class="nhsuk-u-margin-bottom-3 nhsuk-u-margin-top-0">
+                  </p>
+                {% else %}
+                  <p>
+                  <strong>Date:</strong> {{ item.date }}<br />
+                  <hr class="nhsuk-u-margin-bottom-3 nhsuk-u-margin-top-0">
+                  <strong>Time:</strong> {{ item.time }}<br />
+                  <hr class="nhsuk-u-margin-bottom-3 nhsuk-u-margin-top-0">
+                  <strong>Location:</strong> {{item.location}} <br />
+                  <hr class="nhsuk-u-margin-bottom-3 nhsuk-u-margin-top-0">
+                  <strong>Appointment type:</strong> {{ item.type }}
+                  <hr class="nhsuk-u-margin-bottom-3 nhsuk-u-margin-top-0">
+                  </p>
+                  {% call details({
+                    summaryText: "Add to calendar"
+                  }) %}
+                  <ul>
+                    <li><a href="#">Google</a></li>
+                    <li><a href="#">iCal file</a></li>
+                    <li><a href="#">Outlook</a></li>
+                    <li><a href="#">Microsoft 365</a></li>
+                  </ul>
+                  {% endcall %}
+                  {% endif %}
+                {% endset %}
+
+                {{ card({
+                  primary: false,
+                  clickable: true,
+                  heading: item.service + " appointment",
+                  headingSize: "m",
+                  href: "/appointment-details-" + item.slug,
+                  descriptionHtml: cardDescriptionHtmlUpcoming
+                }) }}
+
+
+              </li>
+            {% endfor %}
+          </ul>
+
+      {% endset -%}
+
+      {% set pastContent%}
+        <h2 class="nhsuk-heading-l">Past appointments</h2>
+
+        <ul class="nhsuk-grid-row nhsuk-card-group">
+            {% for item in pastAppointments %}
+              <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+
+                {% set cardDescriptionHtmlPast %}
+                  <p>
+                  <strong>Date:</strong> {{ item.date }}<br />
+                  <hr class="nhsuk-u-margin-bottom-3 nhsuk-u-margin-top-0">
+                  <strong>Time:</strong> {{ item.time }}<br />
+                  <hr class="nhsuk-u-margin-bottom-3 nhsuk-u-margin-top-0">
+                  <strong>Location:</strong> {{item.location}} <br />
+                  <hr class="nhsuk-u-margin-bottom-3 nhsuk-u-margin-top-0">
+                  <strong>Appointment type:</strong> {{ item.type }}
+                  <hr class="nhsuk-u-margin-bottom-3 nhsuk-u-margin-top-0">
+                  </p>
+                {% endset %}
+
+                {{ card({
+                  primary: false,
+                  clickable: true,
+                  heading: item.service + " appointment",
+                  headingSize: "m",
+                  href: "/appointment-details-" + item.slug,
+                  descriptionHtml: cardDescriptionHtmlPast
+                }) }}
+
+
+              </li>
+            {% endfor %}
+          </ul>
+
+      {% endset -%}
+
+      {{ tabs({
+        items: [
+        {
+          label: "Upcoming appointments",
+          id: "upcoming",
+          panel: {
+            html: upcomingContent
+            }
+          },
+          {
+            label: "Past appointments",
+            id: "past",
+            panel: {
+              html: pastContent
+            }
+          }
+        ]
+      }) }}
+
+
+    </div>
+  </div>
+{% endblock %}

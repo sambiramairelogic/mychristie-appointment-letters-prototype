@@ -1,0 +1,134 @@
+{% extends "layout.html" %}
+
+{% from "breadcrumb/macro.njk" import breadcrumb %}
+{% from "action-link/macro.njk" import actionLink %}
+{% from "input/macro.njk" import input %}
+{% from "button/macro.njk" import button %}
+{% from "summary-list/macro.njk" import summaryList %}
+{% from "warning-callout/macro.njk" import warningCallout %}
+{% from "notification-banner/macro.njk" import notificationBanner %}
+
+
+    {% set userData = [
+        {"name": "Fanni Whitehead", "christieNum": "202612121", "email": "fwhitehead0@so-net.ne.jp", "emailConfirmed": "FALSE", "phoneNum": "8446954422", "lastLogin": ""}
+      ] %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "/admin-manage-users",
+    text: "Back to manage users"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+    {% set html %}
+      <h3 class="nhsuk-notification-banner__heading">
+        User details updated successfully
+      </h3>
+      <p>Example: <strong>{{userData[0].name}}'s</strong> email address has been updated successfully.</p>
+    {% endset %}
+
+    {{ notificationBanner({
+      html: html,
+      type: "success"
+    }) }}
+
+      <h1 class="nhsuk-heading-xl">Manage patient details</h1>
+
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+
+          {% for item in userData %}
+          {{ summaryList({
+            rows: [
+              {
+                key: {
+                  text: "Name"},
+                value: {
+                  text: item.name
+                },
+                actions: {
+                  items: [
+                    {
+                      href: "/admin-change-name",
+                      text: "Change",
+                      visuallyHiddenText: "name"
+                    }
+                  ]
+                }
+              },
+              {
+                key: {
+                  text: "Christie number"},
+                value: {
+                  text: item.christieNum
+                }
+              },
+              {
+                key: {
+                  text: "Email"},
+                value: {
+                  text: item.email
+                },
+                actions: {
+                  items: [
+                    {
+                      href: "/admin-change-email",
+                      text: "Change",
+                      visuallyHiddenText: "email"
+                    }
+                  ]
+                }
+              },
+              {
+                key: {
+                  text: "Phone number"},
+                value: {
+                  text: item.phoneNum
+                },
+                actions: {
+                  items: [
+                    {
+                      href: "/admin-change-phone",
+                      text: "Change",
+                      visuallyHiddenText: "phone number"
+                    }
+                  ]
+                }
+              },
+              {
+                key: {
+                  text: "Last login"},
+                value: {
+                  text: item.lastLogin
+                },
+                actions: {
+                  items: [
+                    {
+                      href: "#",
+                      text: "Manually verify account",
+                      visuallyHiddenText: "verify account"
+                    }
+                  ]
+                }
+              }
+            ]
+          }) }}
+          {% endfor %}
+
+          {{ warningCallout({
+            heading: "Updating patient details",
+            text: "Any changes made to patient details here must be manually reflected in CareFlow."
+          }) }}
+          
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}

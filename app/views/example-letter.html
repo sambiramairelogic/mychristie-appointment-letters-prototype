@@ -1,0 +1,40 @@
+{% extends 'layout-transactional.html' %}
+
+{% set pageName = 'MyChristie - Example letter' %}
+
+{% block beforeContent %}
+  {% from "back-link/macro.njk" import backLink %}
+
+  {{ backLink({
+    href: backLinkHref,
+    text: "Back"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <h1 class="nhsuk-heading-xl">Example letter</h1>
+
+      <p class="nhsuk-body">This is an example letter you received on 1st January 2024.</p>
+
+      <p class="nhsuk-body">
+        <a class="nhsuk-link" href="/example-letter.pdf">Download this letter as a PDF</a>
+      </p>
+
+      <div style="height: 80vh; border: 1px solid #d8dde0; border-radius: 4px; overflow: hidden;">
+        <iframe
+          title="Example letter PDF"
+          src="/example-letter-inline.pdf"
+          width="100%"
+          height="100%"
+          style="border: 0;"
+        ></iframe>
+      </div>
+
+      <p class="nhsuk-body" style="margin-top: 16px;">
+        If the letter does not load in your browser, <a class="nhsuk-link" href="/example-letter-inline.pdf">open the PDF directly</a>.
+      </p>
+    </div>
+  </div>
+{% endblock %}

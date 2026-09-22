@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% from "breadcrumb/macro.njk" import breadcrumb %}
+{% from "action-link/macro.njk" import actionLink %}
+{% from "input/macro.njk" import input %}
+{% from "button/macro.njk" import button %}
+{% from "summary-list/macro.njk" import summaryList %}
+{% from "inset-text/macro.njk" import insetText %}
+
+
+    {% set userData = [
+        {"name": "Fanni Whitehead", "christieNum": "202612121", "email": "fwhitehead0@so-net.ne.jp", "emailConfirmed": "FALSE", "phoneNum": "8446954422", "lastLogin": ""}
+      ] %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "/admin-manage-users",
+    text: "Back to manage users"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <h1 class="nhsuk-heading-xl">Change {{userData[0].name}}'s phone number</h1>
+      <p>Change the phone number for {{userData[0].name}}.</p>
+      <p>Current phone number: <strong> {{userData[0].phoneNum}}</strong>.</p>
+
+        {% set insetTextHtml %}
+          <p>Saving this change instantly updates the user's 2FA phone number. The user may be locked out of their account if they do not have access to this new phone number the next time they sign in.</p>
+        {% endset %}
+
+        {{ insetText({
+          html: insetTextHtml
+        }) }}
+
+        <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+            {{ input({
+            id: "phone",
+            name: "phone",
+            label: {
+                text: "Change phone number",
+                size: "m",
+                isPageHeading: true
+            },
+                hint: {
+                text: "Enter phone number"
+                },
+            classes: "nhsuk-u-width-one-half",
+            id: "one-half",
+            name: "oneHalf"
+            }) }}
+
+            {{ input({
+            id: "phoneConfirm",
+            name: "phoneConfirm",
+                hint: {
+                text: "Confirm phone number"
+                },
+            classes: "nhsuk-u-width-one-half",
+            id: "one-half",
+            name: "oneHalf"
+            }) }}
+         </div>
+      </div>
+
+        <div class="nhsuk-button-group">
+        {{ button({
+          text: "Save changes",
+          href: "/admin-manage-users"
+        }) }}
+
+        <a href="/admin-patient-details" class="nhsuk-link">Cancel</a>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+{% endblock %}

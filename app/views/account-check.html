@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% from "back-link/macro.njk" import backLink %}
+{% from "button/macro.njk" import button %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "/login-creds",
+    text: "Back to login"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-two-thirds">
+
+      <h1 class="nhsuk-heading-xl">I'm not sure if I have a MyChristie account</h1>
+      <p>If you're not sure if you have a MyChristie account you can try creating a new one.</p>
+      <p>We'll check the details you enter and let you know if you already have one.</p>
+
+        {{ button({
+        text: "Create account",
+        name: "createAccountButton",
+        href: "/account-create-pg1"
+        }) }}
+
+{% endblock %}

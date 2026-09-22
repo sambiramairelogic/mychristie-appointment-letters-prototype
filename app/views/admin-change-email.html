@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+
+{% from "breadcrumb/macro.njk" import breadcrumb %}
+{% from "action-link/macro.njk" import actionLink %}
+{% from "input/macro.njk" import input %}
+{% from "button/macro.njk" import button %}
+{% from "summary-list/macro.njk" import summaryList %}
+
+
+    {% set userData = [
+        {"name": "Fanni Whitehead", "christieNum": "202612121", "email": "fwhitehead0@so-net.ne.jp", "emailConfirmed": "FALSE", "phoneNum": "8446954422", "lastLogin": ""}
+      ] %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "/admin-manage-users",
+    text: "Back to manage users"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <h1 class="nhsuk-heading-xl">Change {{userData[0].name}}'s email address</h1>
+      <p>Change the email address for {{userData[0].name}}.</p>
+      <p>Current email address: <strong> {{userData[0].email}}</strong>.</p>
+      </br>
+      
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+            {{ input({
+            id: "email",
+            name: "email",
+            label: {
+                text: "Change email address",
+                size: "m",
+                isPageHeading: true
+            },
+                hint: {
+                text: "Enter email address"
+                },
+            classes: "nhsuk-u-width-one-half",
+            id: "one-half",
+            name: "oneHalf"
+            }) }}
+
+            {{ input({
+            id: "emailConfirm",
+            name: "emailConfirm",
+                hint: {
+                text: "Confirm email address"
+                },
+            classes: "nhsuk-u-width-one-half",
+            id: "one-half",
+            name: "oneHalf"
+            }) }}
+         </div>
+      </div>
+
+        <div class="nhsuk-button-group">
+        {{ button({
+          text: "Save changes",
+          href: "/admin-manage-users"
+        }) }}
+
+        <a href="/admin-patient-details" class="nhsuk-link">Cancel</a>
+        </div>
+
+
+    </div>
+  </div>
+{% endblock %}

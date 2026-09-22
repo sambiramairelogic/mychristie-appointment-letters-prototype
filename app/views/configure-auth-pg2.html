@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% from "error-summary/macro.njk" import errorSummary %}
+{% from "error-message/macro.njk" import errorMessage %}
+{% from "input/macro.njk" import input %}
+{% from "button/macro.njk" import button %}
+{% from "back-link/macro.njk" import backLink %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "/configure-auth-pg1",
+    text: "Back to my configure authentication"
+    })
+  }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-two-thirds">
+
+    <caption class="nhsuk-table__caption nhsuk-u-visually-hidden">Configure two-factor authentication</caption>
+    <h1 class="nhsuk-heading-xl">Verify your two-factor authentication code</h1>
+
+          {% set errors %}
+            errors
+          {% endset %}
+
+
+          {% if errors %}
+                {{ errorSummary({
+                  titleText: "There is a problem",
+                  errorList: [
+                    {
+                      text: "Enter the authentication code",
+                      href: "#code"
+                    } if errors,
+                    {
+                      text: "Authentication code does not match",
+                      href: "#code"
+                    } if errors
+                  ]
+                }) }}
+          {% endif %}
+
+        {{ input({
+            label: {
+            text: "Authentication code"
+            },
+            id: "code",
+            name: "code",
+            classes: "nhsuk-input--width-20",
+            errorMessage: {
+            text: "Enter the authentication code"
+            }
+        }) }}
+
+
+          {{ button({
+            text: "Continue",
+            name: "continuebutton",
+            href: "/my-details"
+          }) }}
+
+          <div>
+          <a href="/my-details" class="nhsuk-link nhsuk-u-margin-top-5">I do not want to configure two-factor authentication</a>
+          </div>
+
+{% endblock %}

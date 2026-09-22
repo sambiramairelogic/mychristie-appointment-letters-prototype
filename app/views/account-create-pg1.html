@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% from "card/macro.njk" import card %}
+{% from "button/macro.njk" import button %}
+{% from "input/macro.njk" import input %}
+{% from "back-link/macro.njk" import backLink %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "/login-creds",
+    text: "Back to login"
+    })
+  }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-two-thirds">
+      
+      {% set cardDescriptionHtml1 %}
+      <h1 class="nhsuk-heading-xl">Create an account</h1>
+        <p>You can sign up for an account if you are a patient at The Christie and you are already receiving forms through text or email.</p>
+        <p>We'll use your email to create an account and register for <Strong>your MyChristie account</Strong>.</p>
+        <p>You will need a phone that we can send a security code to.</p>
+        <p>If you already have an account, we’ll let you know before completing the next steps.</p>
+
+            {{ button({
+              text: "Continue",
+              name: "continuebutton",
+              href: "/account-create-pg2"
+            }) }}
+      {% endset %}
+
+      {% set cardDescriptionHtml2 %}
+      <h2 class="nhsuk-heading-l">Help us find your details</h2>
+        <p>You will need to tell us some details so that we can connect to your existing health record.</p>
+        <p>We will ask for:</p>
+        <ul>
+        <li>name</li>
+        <li>date of birth</li>
+        <li>postcode</li>
+        <li>email address (the same one we have in your patient record)</li>
+        <li>mobile number (the same one we have in your patient record)</li>
+        </ul>
+      {% endset %}
+
+      {{ card({
+        clickable: false,
+        descriptionHtml: cardDescriptionHtml1
+      }) }}
+      {{ card({
+        clickable: false,
+        descriptionHtml: cardDescriptionHtml2
+      }) }}
+      
+
+{% endblock %}

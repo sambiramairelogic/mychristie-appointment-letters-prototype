@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% from "back-link/macro.njk" import backLink %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "/login",
+    text: "Back to login"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-two-thirds">
+
+      <h1 class="nhsuk-heading-xl">Login using NHS details</h1>
+      <p> The user would be taken to the NHS app login.</p>
+
+
+
+{% endblock %}

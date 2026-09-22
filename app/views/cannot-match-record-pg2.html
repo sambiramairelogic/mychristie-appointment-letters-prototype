@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% from "button/macro.njk" import button %}
+{% from "back-link/macro.njk" import backLink %}
+{% from "notification-banner/macro.njk" import notificationBanner %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% set html %}
+<p class="nhsuk-notification-banner__heading">
+    Support request sent </p>
+  <p>We have notified our support team with your request.</p>
+  <p> A copy of your request has been sent to <strong>jane.doe@example.com</strong>.</p>
+{% endset %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-two-thirds">
+
+        {{ notificationBanner({
+            html: html,
+            variant: "success"
+        }) }}
+
+      {{ button({
+        text: "Back to login",
+        name: "continuebutton",
+        href: "/login-creds",
+        classes: "nhsuk-button--secondary"
+      }) }}
+
+    </div>
+  </div>
+
+{% endblock %}

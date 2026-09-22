@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% from "button/macro.njk" import button %}
+{% from "inset-text/macro.njk" import insetText %}
+{% from "summary-list/macro.njk" import summaryList %}
+{% from "checkboxes/macro.njk" import checkboxes %}
+{% from "button/macro.njk" import button %}
+{% from "tag/macro.njk" import tag %}
+{% from "back-link/macro.njk" import backLink %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "/my-details",
+    text: "Back to my details"
+    })
+  }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <h1 class="nhsuk-heading-xl">Contact preferences</h1>
+
+      {{ checkboxes({
+        idPrefix: "example",
+        name: "example",
+        fieldset: {
+          legend: {
+            text: "How do you want to be contacted regarding forms?",
+            size: "s",
+            isPageHeading: false
+          }
+        },
+        hint: {
+          text: "Select all options that are relevant to you"
+        },
+        items: [
+          {
+            value: "email",
+            text: "Email"
+          },
+          {
+            value: "text message",
+            text: "Text message"
+          }
+        ]
+      }) }}
+      {{ checkboxes({
+        idPrefix: "example",
+        name: "example",
+        fieldset: {
+          legend: {
+            text: "How do you want to be contacted regarding appointments?",
+            size: "s",
+            isPageHeading: false
+          }
+        },
+        hint: {
+          text: "Select all options that are relevant to you"
+        },
+        items: [
+          {
+            value: "email",
+            text: "Email"
+          },
+          {
+            value: "text message",
+            text: "Text message"
+          }
+        ]
+      }) }}
+
+      <div class="nhsuk-button-group">
+      {{ button({
+        text: "Save changes",
+        href: "/my-details"
+      }) }}
+
+      <a href="/my-details" class="nhsuk-link">Cancel</a>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends "layout.html" %}
+
+{% from "breadcrumb/macro.njk" import breadcrumb %}
+{% from "action-link/macro.njk" import actionLink %}
+{% from "tabs/macro.njk" import tabs %}
+{% from "tables/macro.njk" import table %}
+{% from "tag/macro.njk" import tag %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+    {% set pendingForms = [
+      { name: "Thyroid", status: "Pending", sent: "28th July 2026 11:00am", notes: "Note 1" },
+      { name: "Cranial follow up", status: "Pending", sent: "20th July 2026 08:00am", notes: "Note 2" },
+      { name: "DXA baseline", status: "Pending", sent: "15th July 2026 2:00pm", notes: "Note 3" },
+      { name: "Follow up", status: "Pending", sent: "1st July 2026 10:00am", notes: "Note 4" }
+    ] %}
+
+    {% set allForms = [
+      { name: "Thyroid", status: "Pending", sent: "28th July 2026 11:00am", notes: "Note 1"},
+      { name: "Cranial follow up", status: "Pending", sent: "20th July 2026 08:00am", notes: "Note 2"},
+      { name: "DXA baseline", status: "Pending", sent: "15th July 2026 2:00pm", notes: "Note 3"},
+      { name: "Advice follow up", status: "Expired", sent: "10th July 2026 10:00am", notes: "Expired on 20th July 2026 6:00pm"},
+      { name: "Follow up", status: "Pending", sent: "1st July 2026 10:00am", notes: "Note 4"},
+      { name: "Radiology", status: "Completed", sent: "15th June 2026 9:00am", notes: "Completed on 18th July 2026 5:12pm"},
+      { name: "Cranial follow up", status: "Completed", sent: "10th April 2026 8:00am", notes: "Completed 11th April 2026 9:00am"},
+      { name: "Cranial follow up", status: "Expired", sent: "2nd December 2026 4:00pm", notes: "Expired 28th December 2026 6:00pm"}
+    ] %}
+
+    {% set statusConfig = {
+      "Pending": { 
+        tagClass: "nhsuk-tag--yellow", 
+        actionValue: { header: "Action", html: '<a class="nhsuk-link" href="/home">View</a>' } 
+      },
+      "Completed": { 
+        tagClass: "nhsuk-tag--green", 
+        actionValue: { header: "Action", text: "No action" } 
+      },
+      "Expired": { 
+        tagClass: "nhsuk-tag--red", 
+        actionValue: { header: "Action", text: "No action" } 
+      }
+    } %}
+
+
+    {% block content %}
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+
+          <h1 class="nhsuk-heading-xl">My forms</h1>
+
+    {% set pendingContent%}
+      <h2 class="nhsuk-heading-l">Pending forms</h2>
+
+        {% set tableRows = [] %}
+        {% for item in pendingForms %}
+          {% set currentConfig = statusConfig[item.status] or statusConfig["Expired"] %}
+
+          {% set tableRows = (tableRows.push([
+            { header: "Name", text: item.name },
+            { header: "Status", html: tag({ text: item.status, classes: currentConfig.tagClass}) },
+            { header: "Sent", text: item.sent },
+            { header: "Notes", text: item.notes },
+            currentConfig.actionValue
+          ]), tableRows) %}
+        {% endfor %}
+
+        {{ table({
+          firstCellIsHeader: false,
+          responsive: true,
+          head: [
+            { text: "Name", classes: "nhsuk-u-width-one-quarter" },
+            { text: "Status", classes: "nhsuk-u-width-one-quarter" },
+            { text: "Sent", classes: "nhsuk-u-width-one-quarter" },
+            { text: "Notes", classes: "nhsuk-u-width-one-quarter" },
+            { text: "Action", classes: "nhsuk-u-width-one-quarter" }
+          ],
+          rows: tableRows
+        }) }}
+
+    {% endset -%}
+
+    {% set allContent%}
+      <h2 class="nhsuk-heading-l">All forms</h2>
+
+        {% set tableRows = [] %}
+        {% for item in allForms %}
+          {% set currentConfig = statusConfig[item.status] or statusConfig["Expired"] %}
+
+          {% set tableRows = (tableRows.push([
+            { header: "Name", text: item.name },
+            { header: "Status", html: tag({ text: item.status, classes: currentConfig.tagClass}) },
+            { header: "Sent", text: item.sent },
+            { header: "Notes", text: item.notes },
+            currentConfig.actionValue
+          ]), tableRows) %}
+        {% endfor %}
+
+        {{ table({
+          firstCellIsHeader: false,
+          responsive: true,
+          head: [
+            { text: "Name", classes: "nhsuk-u-width-one-quarter" },
+            { text: "Status", classes: "nhsuk-u-width-one-quarter" },
+            { text: "Sent", classes: "nhsuk-u-width-one-quarter" },
+            { text: "Notes", classes: "nhsuk-u-width-one-quarter" },
+            { text: "Action", classes: "nhsuk-u-width-one-quarter" }
+          ],
+          rows: tableRows
+        }) }}
+
+    {% endset -%}
+
+
+    {{ tabs({
+      items: [
+      {
+        label: "Pending",
+        id: "pendingForms",
+        panel: {
+          html: pendingContent
+          }
+        },
+        {
+          label: "All",
+          id: "allForms",
+          panel: {
+            html: allContent
+          }
+        }
+      ]
+    }) }}
+
+    </div>
+  </div>
+{% endblock %}

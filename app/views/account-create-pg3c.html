@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% from "button/macro.njk" import button %}
+{% from "card/macro.njk" import card %}
+{% from "back-link/macro.njk" import backLink %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "/account-create-pg2",
+    text: "Back to create an account"
+    })
+  }}
+{% endblock %}
+
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-two-thirds">
+
+      <h1 class="nhsuk-heading-xl">We do not recognise your email address</h1>
+      <p>We are not able to recognise your email address <strong>jane.doe@example.com</strong>.</p>
+      <p>Confirm you have entered the correct email address.</p>
+      <p>If you are not able to create an account, you can contact our support team at <a href="mailto:the-christie.patientportalsupport@nhs.net">the-christie.patientportalsupport@nhs.net</a>.</p>
+
+
+      {{ button({
+        text: "Continue to login",
+        name: "continuebutton",
+        href: "/login-creds"
+      }) }}
+
+      {% set troubleshoot %}
+        <ul class="nhsuk-list nhsuk-list">
+          <li>
+            <a href="/account-email">I've lost access to my email address</a>
+          </li>
+        </ul>
+      {% endset %}
+
+      <ul class="nhsuk-grid-row nhsuk-card-group">
+        <li class="nhsuk-grid-column-two-thirds nhsuk-card-group__item">
+          {{ card({
+            clickable: false,
+            heading: "Trouble with logging in?",
+            headingSize: "m",
+            descriptionHtml: troubleshoot
+          }) }}
+        </li>
+      </ul>
+
+{% endblock %}

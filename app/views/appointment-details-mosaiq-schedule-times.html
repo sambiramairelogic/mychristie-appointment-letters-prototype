@@ -1,0 +1,113 @@
+{% extends "layout.html" %}
+
+{% from "back-link/macro.njk" import backLink %}
+{% from "button/macro.njk" import button %}
+{% from "inset-text/macro.njk" import insetText %}
+{% from "summary-list/macro.njk" import summaryList %}
+{% from "card/macro.njk" import card %}
+{% from "action-link/macro.njk" import actionLink %}
+{% from "details/macro.njk" import details %}
+{% from "details/macro.njk" import details %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+    {% set appointmentDetails = [
+      { label: "Hospital service", value: "Radio/Brachy - day schedule" },
+      { label: "Date", value: "Friday 21st August 2026" },
+      { label: "Time", value: "9:00am" },
+      { label: "Location", value: "Oak Rd Treatment Centre (Dept 1)" },
+      { label: "Appointment type", value: "Treatment" }
+    ] %}
+    {% set schedule = [
+      { time: "9:00am", event: "Radiotherapy pre-treatment", location: "Radiotherapy Dept" },
+      { time: "9:30am", event: "Imaging", location: "Radiotherapy Dept" },
+      { time: "10:30am", event: "Radiotherapy treatment", location: "Radiotherapy Dept" },
+      { time: "11:00am", event: "Consultation", location: "Consultation Room" },
+      { time: "1:00pm", event: "Imaging", location: "Radiology Dept" }
+    ] %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "/appointments-v2",
+    text: "Back to appointments"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <h1 class="nhsuk-heading-xl">Appointment details</h1>
+        {% set detailRows = [] %}
+          {% for item in appointmentDetails %}
+            {% set detailRows = (detailRows.push({
+              key: { text: item.label },
+              value: { text: item.value }
+            }), detailRows) %}
+          {% endfor %}
+
+        {{ summaryList({
+          rows: detailRows
+        }) }}
+
+        {% call details({
+          summaryText: "Add to calendar"
+        }) %}
+        <ul>
+          <li><a href="#">Google</a></li>
+          <li><a href="#">iCal file</a></li>
+          <li><a href="#">Outlook</a></li>
+          <li><a href="#">Microsoft 365</a></li>
+        </ul>
+        {% endcall %}
+
+        {% call details({
+          summaryText: "I'm running late"
+        }) %}
+          <p> If you're going to be late, contact us on 0161 123 4567 as soon as possible. You might have to wait while we find a new space for you.</p>
+        {% endcall %}
+
+        <h2 class="nhsuk-heading-l">Schedule</h2>
+        <p>The times shown are planned appointment times and may change during the day if your treatment or clinic is running behind schedule. Attend for the earliest appointment shown.</p>
+        
+        {% set tableRows = [] %}
+          {% for item in schedule %}
+            {% set tableRows = (tableRows.push([
+              { header: "Time", text: item.time },
+              { header: "Activity", text: item.event },
+              { header: "Location", text: item.location }
+            ]), tableRows) %}
+          {% endfor %}
+
+        {{ table({
+          firstCellIsHeader: true,
+          responsive: true,
+          head: [
+            { text: "Time" },
+            { text: "Activity" },
+            { text: "Location" }
+          ],
+          rows: tableRows
+        }) }}
+
+        {% set cardDescriptionHtml %}
+          <ul>
+            <li>your condition has changed</li>
+            <li>you think you have a different condition</li>
+          </ul>
+        {% endset %}
+
+        {{ card({
+          type: "non-urgent",
+          heading: "Contact your care providers if:",
+          descriptionHtml: cardDescriptionHtml
+        }) }}
+
+        <h2 class="nhsuk-heading-l">Get help with this appointment</h2>
+        <p>If there has been any change in your health or circumstances that may affect your treatment:</p>
+        <p>Call <a href="tel:01611234567">0161 123 4567</a> between the hours of 8am and 8pm</p>
+        <p>Or <a href="tel:01619876543">0161 987 6543</a> if out of hours</p>
+
+    </div>
+  </div>
+{% endblock %}

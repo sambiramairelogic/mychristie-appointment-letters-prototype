@@ -1,0 +1,138 @@
+{% extends 'layout.html' %}
+
+{% set pageName = 'MyChristie - Your Letters' %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <h1 class="nhsuk-heading-xl">Your letters</h1>
+
+      <p>The MyChristie portal contains letters going back 2 years.  If you require copies of letters more than 2 years old, you should contact your care team to request specific letters.  If you would like to request a full copy of your health record and personal information we hold about you, you can make a Subject Access Request (SAR) by contacting <a href="mailto:the-christie.accesstorecordslegal@nhs.net">the-christie.accesstorecordslegal@nhs.net</a>.</p>
+
+      {% from "tabs/macro.njk" import tabs %}
+      {% from "tables/macro.njk" import table %}
+      {% from "tag/macro.njk" import tag %}
+      {% from "pagination/macro.njk" import pagination %}
+      {% from "search-input/macro.njk" import searchInput %}
+
+      {% set outcomeRows = [] %}
+      {% for letter in outcomeLetters %}
+        {% set statusHtml %}<strong class="nhsuk-tag {{ 'nhsuk-tag--grey' if letter.status == 'read' else 'nhsuk-tag--green' }}">{{ 'Read' if letter.status == 'read' else 'Unread' }}</strong>{% endset %}
+        {% set _ = outcomeRows.push([
+          { header: 'Author', text: letter.author },
+          { header: 'Date Sent', text: letter.dateSent },
+          { header: 'Status', html: statusHtml },
+          { header: 'Action', html: '<a class="nhsuk-link" href="/example-letter">View letter</a><br><a class="nhsuk-link" href="/example-letter.pdf">Download PDF</a>' }
+        ]) %}
+      {% endfor %}
+
+      {% set appointmentRows = [] %}
+      {% for letter in appointmentLetters %}
+        {% set statusHtml %}<strong class="nhsuk-tag {{ 'nhsuk-tag--grey' if letter.status == 'read' else 'nhsuk-tag--green' }}">{{ 'Read' if letter.status == 'read' else 'Unread' }}</strong>{% endset %}
+        {% set _ = appointmentRows.push([
+          { header: 'Specialty', text: letter.specialty },
+          { header: 'Appointment Date', text: letter.appointmentDate },
+          { header: 'Status', html: statusHtml },
+          { header: 'Action', html: '<a class="nhsuk-link" href="/example-letter">View letter</a><br><a class="nhsuk-link" href="/example-letter.pdf">Download PDF</a>' }
+        ]) %}
+      {% endfor %}
+
+      {% set outcomeContent %}
+      <form method="get" action="/prototype-1#outcome-letters">
+        <input type="hidden" name="tab" value="outcome">
+        <input type="hidden" name="appointmentPage" value="{{ appointmentPage or 1 }}">
+        {% if appointmentSearchTerm %}
+        <input type="hidden" name="appointmentSearch" value="{{ appointmentSearchTerm }}">
+        {% endif %}
+        {{ searchInput({
+          label: {
+            text: "Search visit summary letters",
+            size: "m"
+          },
+          hint: {
+            text: "Search by author, subject, date of sending"
+          },
+          name: "outcomeSearch",
+          id: "outcome-search",
+          classes: "nhsuk-input--width-10",
+          value: outcomeSearchTerm or ""
+        }) }}
+      </form>
+      {{ table({
+        caption: "Visit Summaries",
+        firstCellIsHeader: true,
+        responsive: true,
+        head: [
+          { text: "Author", classes: "nhsuk-u-width-one-quarter" },
+          { text: "Date Sent", classes: "nhsuk-u-width-one-quarter" },
+          { text: "Status", classes: "nhsuk-u-width-one-quarter" },
+          { text: "Action", classes: "nhsuk-u-width-one-quarter" }
+        ],
+        rows: outcomeRows
+      }) }}
+      {% if outcomeTotalPages > 1 %}
+      {{ pagination(outcomePaginationData) }}
+      {% endif %}
+      {% endset -%}
+
+      {% set appointmentContent %}
+      <form method="get" action="/prototype-1#appointment-letters">
+        <input type="hidden" name="tab" value="appointment">
+        <input type="hidden" name="outcomePage" value="{{ outcomePage or 1 }}">
+        {% if outcomeSearchTerm %}
+        <input type="hidden" name="outcomeSearch" value="{{ outcomeSearchTerm }}">
+        {% endif %}
+        {{ searchInput({
+          label: {
+            text: "Search appointment letters",
+            size: "m"
+          },
+          hint: {
+            text: "Search by specialty, appointment date"
+          },
+          name: "appointmentSearch",
+          id: "appointment-search",
+          classes: "nhsuk-input--width-10",
+          value: appointmentSearchTerm or ""
+        }) }}
+      </form>
+      {{ table({
+        caption: "Appointments",
+        firstCellIsHeader: true,
+        responsive: true,
+        head: [
+          { text: "Specialty", classes: "nhsuk-u-width-one-quarter" },
+          { text: "Appointment Date", classes: "nhsuk-u-width-one-quarter" },
+          { text: "Status", classes: "nhsuk-u-width-one-quarter" },
+          { text: "Action", classes: "nhsuk-u-width-one-quarter" }
+        ],
+        rows: appointmentRows
+      }) }}
+      {% if appointmentTotalPages > 1 %}
+      {{ pagination(appointmentPaginationData) }}
+      {% endif %}
+      {% endset -%}
+
+      {{ tabs({
+        items: [
+          {
+            label: "Visit Summaries",
+            id: "outcome-letters",
+            selected: activeTab == "outcome",
+            panel: {
+              html: outcomeContent
+            }
+          },
+          {
+            label: "Appointments",
+            id: "appointment-letters",
+            selected: activeTab == "appointment",
+            panel: {
+              html: appointmentContent
+            }
+          }
+        ]
+      }) }}
+    </div>
+  </div>
+{% endblock %}

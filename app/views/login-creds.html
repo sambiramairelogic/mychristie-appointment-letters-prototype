@@ -1,0 +1,130 @@
+{% extends "layout.html" %}
+
+{% from "error-summary/macro.njk" import errorSummary %}
+{% from "error-message/macro.njk" import errorMessage %}
+{% from "button/macro.njk" import button %}
+{% from "input/macro.njk" import input %}
+{% from "password-input/macro.njk" import passwordInput %}
+{% from "card/macro.njk" import card %}
+{% from "back-link/macro.njk" import backLink %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block beforeContent %}
+  {{ backLink({
+  href: "/login",
+  text: "Back to login"
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-two-thirds">
+
+      <h1 class="nhsuk-heading-xl">Login to your MyChristie account</h1>
+
+      <form action="/login-creds" method="post">
+
+      {% set errors %}
+        errorsEmailNull
+      {% endset %}
+
+
+      {% if errors %}
+            {{ errorSummary({
+              titleText: "There is a problem",
+              errorList: [
+                {
+                  text: "Enter your email address",
+                  href: "#email"
+                } if errorsEmailNull,
+                {
+                  text: "Enter an email address in the correct format, like name@example.com",
+                  href: "#email"
+                } if errors,
+                {
+                  text: "Enter your password",
+                  href: "#password"
+                } if errorsPasswordNull
+              ]
+            }) }}
+      {% endif %}
+
+      {{ input({
+        label: {
+        text: "Email address"
+        },
+        id: "email",
+        name: "emailtext",
+        classes: "nhsuk-input--width-20",
+        errorMessage: {
+         text: "Enter your email address"
+        }
+      }) }}
+
+      <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-one-half">
+        {{ passwordInput({
+          label: {
+            text: "Password"
+          },
+          errorMessage: {
+            text: "Enter your password"
+          },
+          id: "password",
+          name: "passwordtext"
+        }) }}
+      </div>
+      </div>
+
+      <p class="nhsuk-u-margin-top-0">
+      <a class="nhsuk-link" href="/forgot-password">I've forgotten my password</a>
+      </p>
+
+      {{ button({
+        text: "Continue",
+        name: "continuebutton",
+        href: "/home"
+      }) }}
+
+    </form>
+
+      <p class="nhsuk-heading-m">
+        Or
+        </p>
+
+      {{ button({
+          text: "Create MyChristie account",
+          name: "createbutton",
+          href: "/account-create-original",
+          classes: "nhsuk-button--secondary-solid"
+        }) }}
+
+      {% set troubleshoot %}
+        <ul class="nhsuk-list nhsuk-list">
+          <li>
+            <a href="/account-email">I've lost access to my email address</a>
+          </li>
+          <li>
+            <a href="/account-phone">I've lost access to my phone number</a>
+          </li>
+          <li>
+            <a href="/account-check">I'm not sure if I have an account</a>
+          </li>
+        </ul>
+      {% endset %}
+
+      <ul class="nhsuk-grid-row nhsuk-card-group">
+        <li class="nhsuk-grid-column-two-thirds nhsuk-card-group__item">
+          {{ card({
+            clickable: false,
+            heading: "Trouble with logging in?",
+            headingSize: "m",
+            descriptionHtml: troubleshoot
+          }) }}
+        </li>
+      </ul>
+
+
+
+{% endblock %}

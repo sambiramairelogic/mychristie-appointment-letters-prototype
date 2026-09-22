@@ -1,0 +1,161 @@
+{% extends "layout.html" %}
+
+{% from "error-summary/macro.njk" import errorSummary %}
+{% from "error-message/macro.njk" import errorMessage %}
+{% from "button/macro.njk" import button %}
+{% from "input/macro.njk" import input %}
+{% from "date-input/macro.njk" import dateInput %}
+{% from "fieldset/macro.njk" import fieldset %}
+{% from "back-link/macro.njk" import backLink %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "/login-creds",
+    text: "Back to login"
+    })
+  }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-two-thirds">
+
+      <h1 class="nhsuk-heading-xl">Sign up for an account</h1>
+
+      <form action="/account-check-original" method="post">
+
+          {% set errors %}
+            errors
+          {% endset %}
+
+
+          {% if errors %}
+                {{ errorSummary({
+                  titleText: "There is a problem",
+                  errorList: [
+                    {
+                      text: "Example error for email",
+                      href: "#name"
+                    }
+                  ]
+                }) }}
+          {% endif %}
+
+          {{ input({
+            label: {
+            text: "First name"
+            },
+            id: "name",
+            name: "nametext",
+            classes: "nhsuk-input--width-20",
+            errorMessage: {
+            text: "Enter your first name"
+            }
+          }) }}
+
+          {{ input({
+            label: {
+            text: "Middle name (optional)"
+            },
+            id: "name",
+            name: "nametext",
+            classes: "nhsuk-input--width-20"
+          }) }}
+
+          {{ input({
+            label: {
+            text: "Last name"
+            },
+            id: "name",
+            name: "nametext",
+            classes: "nhsuk-input--width-20",
+            errorMessage: {
+            text: "Enter your last name"
+            }
+          }) }}
+
+          {{ input({
+            label: {
+            text: "Email address"
+            },
+            hint: {
+            text: "This is the email we use to contact you"
+            },
+            id: "email",
+            name: "email",
+            classes: "nhsuk-input--width-20"
+          }) }}
+
+          {{ input({
+            label: {
+            text: "NHS number (optional)"
+            },
+            hint: {
+            text: "Your NHS number is a 10 digit number that you find on any letter the NHS has sent you. For example, 485 777 3456"
+            },
+            id: "nhs-number",
+            name: "nhsNumber",
+            classes: "nhsuk-input--width-20"
+          }) }}
+
+          {{ input({
+            label: {
+            text: "Postcode"
+            },
+            hint: {
+            text: "This will be the postcode of where you live. For example, M20 4BX"
+            },
+            id: "postcode",
+            name: "postcode",
+            classes: "nhsuk-input--width-20",
+            errorMessage: {
+            text: "Enter your postcode"
+            }
+          }) }}
+
+          {{ dateInput({
+            id: "date-of-birth",
+            namePrefix: "dateOfBirth",
+            fieldset: {
+              legend: {
+                text: "Date of birth",
+                size: "xs",
+                isPageHeading: false
+              }
+            },
+            hint: {
+              text: "For example, 15 3 1984"
+            },
+            items: [
+              {
+                name: "day",
+                classes: "nhsuk-input--width-2",
+                autocomplete: "bday-day"
+              },
+              {
+                name: "month",
+                classes: "nhsuk-input--width-2",
+                autocomplete: "bday-month"
+              },
+              {
+                name: "year",
+                classes: "nhsuk-input--width-4",
+                autocomplete: "bday-year"
+              }
+            ]
+          }) }}
+
+        <div class="nhsuk-button-group">
+          {{ button({
+            text: "Continue",
+            name: "continuebutton"
+          }) }}
+          
+          <a href="/login" class="nhsuk-link">Cancel</a>
+        </div>
+
+      </form>
+
+{% endblock %}

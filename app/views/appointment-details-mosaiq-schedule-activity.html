@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% from "back-link/macro.njk" import backLink %}
+{% from "button/macro.njk" import button %}
+{% from "inset-text/macro.njk" import insetText %}
+{% from "summary-list/macro.njk" import summaryList %}
+{% from "card/macro.njk" import card %}
+{% from "action-link/macro.njk" import actionLink %}
+{% from "details/macro.njk" import details %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+    {% set appointmentDetails = [
+      { label: "Hospital service", value: "Radio/Brachy - day schedule" },
+      { label: "Date", value: "Friday 21st August 2026" },
+      { label: "Time", value: "9:00am" },
+      { label: "Location", value: "Oak Rd Treatment Centre (Dept 1)" },
+      { label: "Appointment type", value: "Treatment" }
+    ] %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "/appointments-v2",
+    text: "Back to appointments"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <h1 class="nhsuk-heading-xl">Appointment details</h1>
+
+        {% set detailRows = [] %}
+          {% for item in appointmentDetails %}
+            {% set detailRows = (detailRows.push({
+              key: { text: item.label },
+              value: { text: item.value }
+            }), detailRows) %}
+          {% endfor %}
+
+        {{ summaryList({
+          rows: detailRows
+        }) }}
+
+        <h2 class="nhsuk-heading-l">What to expect</h2>
+        <p>Placeholder text to show how this would look if we wanted to provide information about their day</p>
+
+        <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+          <ul class="nhsuk-list nhsuk-list--bullet">
+              <li>Pre-treatment</li>
+              <li>CT scan</li>
+              <li>Ultrasound</li>
+              <li>CT scans</li>
+              <li>Consultation</li>
+          </ul>
+        </div>
+        </div>
+
+        {% set cardDescriptionHtml %}
+          <ul>
+            <li>your condition has changed</li>
+            <li>you think you have a different condition</li>
+          </ul>
+        {% endset %}
+
+        {{ card({
+          type: "non-urgent",
+          heading: "Contact your care providers if:",
+          descriptionHtml: cardDescriptionHtml
+        }) }}
+
+        <h2 class="nhsuk-heading-l">Get help with this appointment</h2>
+        <p>If there has been any change in your health or circumstances that may affect your treatment, contact us on <a href="tel:01611234567">0161 123 4567</a>. Between the hours of 8am and 8pm or <a href="tel:01619876543">0161 987 6543</a> if out of hours.</p>
+
+    </div>
+  </div>
+{% endblock %}

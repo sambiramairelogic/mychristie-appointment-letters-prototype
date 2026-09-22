@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% from "button/macro.njk" import button %}
+{% from "card/macro.njk" import card %}
+{% from "back-link/macro.njk" import backLink %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "/admin-manage-users",
+    text: "Back to manage users"
+    })
+  }}
+{% endblock %}
+
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-two-thirds">
+
+      <h1 class="nhsuk-heading-xl">Email failed to send</h1>
+      <p>The email was not able to send to <strong>jane.doe@example.com</strong>.</p>
+      <p><strong>Correlation ID:</strong> 12345-12345</p>
+      <p><strong>Time of failure:</strong> 26 August 2023, 10:30am</p>
+
+      <h2 class="nhsuk-heading-l">What you can do</h2>
+      <p>Check the user record:</p>
+      <ul class="nhsuk-list nhsuk-list--bullet">
+        <li>Check the email address is correct</li>
+        <li>Check the user has not already confirmed their email address</li>
+
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends "layout.html" %}
+
+
+{% from "breadcrumb/macro.njk" import breadcrumb %}
+{% from "button/macro.njk" import button %}
+{% from "inset-text/macro.njk" import insetText %}
+{% from "action-link/macro.njk" import actionLink %}
+{% from "tabs/macro.njk" import tabs %}
+{% from "tables/macro.njk" import table %}
+{% from "checkboxes/macro.njk" import checkboxes %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <h1 class="nhsuk-heading-xl">My appointments</h1>
+      <p>View your upcoming and past clinic visits, scans, and treatment appointments. <br/><br/>
+        Some appointments may be provided separately. Check your appointment letters or any other information we sent you.</p>
+
+      {% set insetTextHtml %}
+      <p>Your appointment details may change up to 24 hours before your appointment. Check this page regularly for the latest updates. <br/><br/>
+        If you have an upcoming appointment that is not shown here, contact your care team.</p>
+      {% endset %}
+
+      {{ insetText({
+        html: insetTextHtml | safe
+      }) }}
+
+      <div class="nhsuk-grid-row">
+        <div class="nhsuk-grid-column-full">
+        {% call details({
+          summaryText: "Filter your appointments",
+          classes: "nhsuk-expander"
+        }) %}
+          {{ checkboxes({
+            idPrefix: "cancelled",
+            name: "cancelled",
+            fieldset: {
+              legend: {
+                text: "See your cancelled appointments",
+                size: "s",
+                isPageHeading: true
+              }
+            },
+            items: [
+              {
+                value: "showCanUp",
+                text: "Show cancelled appointments"
+              }
+            ]
+          }) }}
+
+            {% set checkboxFiltersLoop = [] %}
+            {% for item in checkboxFilters%}
+              {% set checkboxFiltersLoop = (checkboxFiltersLoop.concat({
+                value: item.value,
+                text: item.text
+              })) %}
+            {% endfor %}
+
+            {{ checkboxes({
+              idPrefix: "specialty",
+              name: "specialty",
+              fieldset: {
+                legend: {
+                  text: "Filter your appointments by specialty",
+                  size: "s",
+                  isPageHeading: true
+                }
+              },
+              hint: {
+                text: "Select 1 or more specialty, or leave empty to show all."
+              },
+              items: checkboxFiltersLoop
+            }) }}
+
+            <div class="nhsuk-button-group nhsuk-button-group--small">
+              {{ button({
+                text: "Apply filters",
+                classes: "nhsuk-button--small"
+              }) }}
+
+              {{ button({
+                text: "Clear filters",
+                classes: "nhsuk-button--secondary nhsuk-button--small"              }) }}
+            </div>
+
+        {% endcall %}
+          </div>
+        </div>
+
+      {% set upcomingContent%}
+        <h2 class="nhsuk-heading-l">Upcoming appointments</h2>
+
+      <p>You have no available appointments to view. If you believe you are missing appointments, contact your care team for more help.</p>
+      {% endset -%}
+
+      {% set pastContent%}
+        <h2 class="nhsuk-heading-l">Past appointments</h2>
+
+        <p>You have no past appointments to view. If you believe you are missing appointments, contact your care team for more help.</p>
+      {% endset -%}
+
+
+      {{ tabs({
+        items: [
+        {
+          label: "Upcoming appointments",
+          id: "upcoming",
+          panel: {
+            html: upcomingContent
+            }
+          },
+          {
+            label: "Past appointments",
+            id: "past",
+            panel: {
+              html: pastContent
+            }
+          }
+        ]
+      }) }}
+
+    </div>
+  </div>
+{% endblock %}

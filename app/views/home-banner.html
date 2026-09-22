@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% from "card/macro.njk" import card %}
+{% from "inset-text/macro.njk" import insetText %}
+{% from "notification-banner/macro.njk" import notificationBanner %}
+
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+    {% set html %}
+      <p class="nhsuk-notification-banner__heading">
+        You have 4 forms to complete. <br/>
+        <a class="nhsuk-notification-banner__link" href="/forms">Complete your forms</a>
+      </p>
+    {% endset %}
+
+    {{ notificationBanner({
+      html: html
+    }) }}
+
+      <h1 class="nhsuk-heading-xl">Welcome to MyChristie</h1>
+      <p>Keep track of your appointments, read letters from your care team, and fill out forms online.</p>
+
+<div class="nhsuk-width-container">
+  <main class="nhsuk-wrapper" id="mainpastcontent">
+
+    {% set insetTextHtml %}
+    <p><Strong>Next appointment:</Strong> Wednesday 30th September 2026 at 10:30am</p>
+    <p>Go to <a href="/appointments">My appointments</a> for information.</p>
+    {% endset %}
+  
+    {% set myFormsCardTag %}
+        <strong class="nhsuk-tag nhsuk-tag--red nhsuk-u-margin-left-2"> Due</strong>
+    {% endset %}
+
+    {% set myLettersCardTag %}
+        <strong class="nhsuk-tag nhsuk-tag--blue nhsuk-u-margin-left-2"> New </strong>
+    {% endset %}
+
+    {{ insetText({
+      html: insetTextHtml
+    }) }}
+  
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-full">
+          <ul class="nhsuk-grid-row nhsuk-card-group">
+            <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+              {{ card({
+                clickable: true,
+                variant: "primary",
+                headingHtml: '
+                <span class="nhsuk-card__heading nhsuk-heading-m nhsuk-u-display-flex nhsuk-u-justify-content-space-between nhsuk-u-align-items-center nhsuk-u-margin-bottom-4" style="width: 100%;">
+                  <a class="nhsuk-card__link" href="/prototype-1">My forms</a>
+                  ' + myFormsCardTag + '
+                </span>',
+                headingSize: "m",
+                href: "/forms",
+                description: "Complete forms you have been sent or see past responses."
+              }) }} 
+            </li>
+            <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+              {{ card({
+                clickable: true,
+                variant: "primary",
+                heading: "My initiated forms",
+                headingSize: "m",
+                href: "/forms",
+                description: "Complete forms you have started or see past responses."
+              }) }} 
+            </li>
+            <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+              {{ card({
+                clickable: true,
+                variant: "primary",
+                headingHtml: '
+                <span class="nhsuk-card__heading nhsuk-heading-m nhsuk-u-display-flex nhsuk-u-justify-content-space-between nhsuk-u-align-items-center nhsuk-u-margin-bottom-4" style="width: 100%;">
+                  <a class="nhsuk-card__link" href="/prototype-1">My letters</a>
+                  ' + myLettersCardTag + '
+                </span>',
+                headingSize: "m",
+                href: "/prototype-1",
+                description: "View letters from your care team or see past letters."
+              }) }}
+            </li>
+          </ul>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

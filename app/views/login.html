@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+
+{% from "back-link/macro.njk" import backLink %}
+{% from "button/macro.njk" import button %}
+{% from "inset-text/macro.njk" import insetText %}
+{% from "button/macro.njk" import button %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-two-thirds">
+
+      <h1 class="nhsuk-heading-xl">Access your account</h1>
+      <p> This service helps your team at The Christie monitor your symptoms and quality of life at home, and better understand your health.</p>
+
+      <h2 class="nhsuk-heading-l">Log in using your NHS details</h2>
+      <p> You will need to have your NHS login details to hand. If you do not have an account with NHS login, you can create one when you log in. </br></br>
+      You will need to have verified your identity with NHS login before you can access the My Christie portal.</p>
+
+      {{ button({
+      text: "Log in using your NHS details",
+      href: "/login-nhs"
+      }) }}
+
+      <h2 class="nhsuk-heading-l">Log in using your MyChristie details</h2>
+      <p>If you have already created a MyChristie account, you can continue to login using those details below.</p>
+
+      {{ button({
+      text: "Log in using your MyChristie details",
+      href: "/login-creds"
+      }) }}
+
+      <h2 class="nhsuk-heading-l">Access MyChristie questionnaires</h2>
+      <p>If you have used this portal before using your information to access MyChristie questionnaires, you can use your details below.</p>
+
+      {{ button({
+      text: "Log in using your information",
+      href: "/login-demog"
+      }) }}
+
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% from "error-summary/macro.njk" import errorSummary %}
+{% from "error-message/macro.njk" import errorMessage %}
+{% from "button/macro.njk" import button %}
+{% from "input/macro.njk" import input %}
+{% from "card/macro.njk" import card %}
+{% from "back-link/macro.njk" import backLink %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "/login-demog",
+    text: "Back to login"
+    })
+  }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-two-thirds">
+
+      <h1 class="nhsuk-heading-xl">Confirm your mobile number</h1>
+      <p> To complete the login process we need to send a verification code to your mobile phone. </p>
+
+
+
+        <form action="/login-creds" method="post">
+
+          {% set errors %}
+            errors
+          {% endset %}
+
+
+          {% if errors %}
+                {{ errorSummary({
+                  titleText: "There is a problem",
+                  errorList: [
+                    {
+                      text: "Enter your mobile phone number",
+                      href: "#phone"
+                    } if errors,
+                    {
+                      text: "Enter a valid phone number",
+                      href: "#phone"
+                    } if errors,
+                    {
+                      text: "Enter your full mobile phone number",
+                      href: "#phone"
+                    } if errors
+                  ]
+                }) }}
+          {% endif %}
+
+          {{ input({
+            label: {
+            text: "Mobile phone number"
+            },
+            id: "name",
+            name: "nametext",
+            classes: "nhsuk-input--width-20",
+            errorMessage: {
+            text: "Enter your mobile phone number"
+            }
+          }) }}
+
+          {{ button({
+            text: "Continue",
+            name: "continuebutton",
+            href: "/home"
+          }) }}
+
+        </form>
+
+        {% set troubleshoot %}
+            <ul class="nhsuk-list nhsuk-list">
+            <li>
+                <a href="/account-phone">I've lost access to my phone number</a>
+            </li>
+            </ul>
+        {% endset %}
+
+        <ul class="nhsuk-grid-row nhsuk-card-group">
+          <li class="nhsuk-grid-column-two-thirds nhsuk-card-group__item">
+            {{ card({
+              clickable: false,
+              heading: "Trouble with logging in?",
+              headingSize: "m",
+              descriptionHtml: troubleshoot
+            }) }}
+          </li>
+        </ul>
+
+{% endblock %}

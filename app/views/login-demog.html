@@ -1,0 +1,177 @@
+{% extends "layout.html" %}
+
+{% from "error-summary/macro.njk" import errorSummary %}
+{% from "error-message/macro.njk" import errorMessage %}
+{% from "button/macro.njk" import button %}
+{% from "input/macro.njk" import input %}
+{% from "date-input/macro.njk" import dateInput %}
+{% from "fieldset/macro.njk" import fieldset %}
+{% from "card/macro.njk" import card %}
+{% from "back-link/macro.njk" import backLink %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "/login",
+    text: "Back to login"
+    })
+  }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-two-thirds">
+
+      <h1 class="nhsuk-heading-xl">Access your account</h1>
+
+        <form action="/login-creds" method="post">
+
+          {% set errors %}
+            errors
+          {% endset %}
+
+
+          {% if errors %}
+                {{ errorSummary({
+                  titleText: "There is a problem",
+                  errorList: [
+                    {
+                      text: "Enter your last name",
+                      href: "#name"
+                    } if errors,
+                    {
+                      text: "Enter your postcode",
+                      href: "#postcode"
+                    } if errors,
+                    {
+                      text: "Enter a full postcode",
+                      href: "#postcode"
+                    } if errors,
+                    {
+                      text: "Enter your date of birth",
+                      href: "#date-of-birth"
+                    } if errors,
+                    {
+                      text: "Date of birth must include a day",
+                      href: "#date-of-birth"
+                    } if errors,
+                    {
+                      text: "Date of birth must include a month",
+                      href: "#date-of-birth"
+                    } if errors,
+                    {
+                      text: "Date of birth must include a year",
+                      href: "#date-of-birth"
+                    } if errors,
+                    {
+                      text: "Date of birth must include a day and a month",
+                      href: "#date-of-birth"
+                    } if errors,
+                    {
+                      text: "Date of birth must include a day and a year",
+                      href: "#date-of-birth"
+                    } if errors,
+                    {
+                      text: "Date of birth must include a month and a year",
+                      href: "#date-of-birth"
+                    } if errors
+                  ]
+                }) }}
+          {% endif %}
+
+          {{ input({
+            label: {
+            text: "Last name"
+            },
+            id: "name",
+            name: "nametext",
+            classes: "nhsuk-input--width-20",
+            errorMessage: {
+            text: "Enter your last name"
+            }
+          }) }}
+
+
+        {% call fieldset({
+          legend: {
+            text: "What is your postcode?",
+            size: "s",
+            isPageHeading: false
+          }
+          })
+        %}
+
+          {{ input({
+            label: {
+              text: "Postcode"
+            },
+            classes: "nhsuk-input--width-10",
+            id: "postcode",
+            name: "postcode",
+            autocomplete: "postal-code",
+            spellcheck: false
+          }) }}
+
+        {% endcall %}
+
+          {{ dateInput({
+            id: "date-of-birth",
+            namePrefix: "dateOfBirth",
+            fieldset: {
+              legend: {
+                text: "What is your date of birth?",
+                size: "s",
+                isPageHeading: false
+              }
+            },
+            hint: {
+              text: "For example, 15 3 1984"
+            },
+            items: [
+              {
+                name: "day",
+                classes: "nhsuk-input--width-2",
+                autocomplete: "bday-day"
+              },
+              {
+                name: "month",
+                classes: "nhsuk-input--width-2",
+                autocomplete: "bday-month"
+              },
+              {
+                name: "year",
+                classes: "nhsuk-input--width-4",
+                autocomplete: "bday-year"
+              }
+            ]
+          }) }}
+
+          {{ button({
+            text: "Continue",
+            name: "continuebutton",
+            href: "/login-demog-mfa"
+          }) }}
+
+        </form>
+
+        {% set troubleshoot %}
+          <ul class="nhsuk-list nhsuk-list">
+            <li>
+              <a href="/account-phone">I've lost access to my phone number</a>
+            </li>
+          </ul>
+        {% endset %}
+
+        <ul class="nhsuk-grid-row nhsuk-card-group">
+          <li class="nhsuk-grid-column-two-thirds nhsuk-card-group__item">
+            {{ card({
+              clickable: false,
+              heading: "Trouble with logging in?",
+              headingSize: "m",
+              descriptionHtml: troubleshoot
+            }) }}
+          </li>
+        </ul>
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+
+{% from "card/macro.njk" import card %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <h1 class="nhsuk-heading-xl">Welcome to MyChristie</h1>
+      <p>Keep track of your upcoming appointments, read letters from your care team, and fill out forms online.</p>
+
+<div class="nhsuk-width-container">
+  <main class="nhsuk-wrapper" id="mainpastcontent">
+
+  {% set myFormsCard %}
+    <p>You are all up to date with pending forms.</p>
+    <hr class="nhsuk-u-margin-bottom-4 nhsuk-u-margin-top-0">
+    <p>Go to your forms to view all outstanding questionnaires or see past responses.</p>
+  {% endset %}
+
+  {% set myInitiatedFormsCard %}
+    <p>You are all up to date with initiated forms.</p>
+    <hr class="nhsuk-u-margin-bottom-4 nhsuk-u-margin-top-0">
+    <p>Access forms that can be completed by you to report your symptoms to The Christie.</p>
+  {% endset %}
+
+  {% set myApptsCard %}
+    <p><Strong>Next appointment:</Strong> 15 September 2026 at 10:30am</p>
+    <hr class="nhsuk-u-margin-bottom-4 nhsuk-u-margin-top-0">
+    <p>Go to your appointments to view all upcoming appointments or see history.</p>
+  {% endset %}
+
+  {% set myLettersCard %}
+    <p>You have no new letters.</p>
+    <hr class="nhsuk-u-margin-bottom-4 nhsuk-u-margin-top-0">
+    <p>Go to your letters to view all unread messages or see past documents.</p>
+  {% endset %}
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-full">
+          <ul class="nhsuk-grid-row nhsuk-card-group">
+            <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+              {{ card({
+                clickable: true,
+                variant: "primary",
+                heading: "My forms",
+                headingSize: "m",
+                href: "/forms",
+                descriptionHtml: myFormsCard
+              }) }} 
+            </li>
+            <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+              {{ card({
+                clickable: true,
+                variant: "primary",
+                heading: "My initiated forms",
+                headingSize: "m",
+                href: "/forms",
+                descriptionHtml: myInitiatedFormsCard
+              }) }} 
+            </li>
+            <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+              {{ card({
+                clickable: true,
+                variant: "primary",
+                heading: "My appointments",
+                headingSize: "m",
+                href: "/appointments",
+                descriptionHtml: myApptsCard
+              }) }}
+            </li>
+            <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+              {{ card({
+                clickable: true,
+                variant: "primary",
+                heading: "My letters",
+                headingSize: "m",
+                href: "/prototype-1",
+                descriptionHtml: myLettersCard
+              }) }}
+            </li>
+        <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+            {{ card({
+            heading: "My Details",
+            headingSize: "m",
+            description: "View and update your communication preferences.",
+            href: "#",
+            clickable: true,
+            variant: "secondary"
+            }) }}
+        </li>
+        </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,118 @@
+{% extends "layout.html" %}
+
+{% from "card/macro.njk" import card %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <h1 class="nhsuk-heading-xl">Welcome to MyChristie</h1>
+      <p>Keep track of your upcoming appointments, read letters from your care team, and fill out forms online.</p>
+
+<div class="nhsuk-width-container">
+  <main class="nhsuk-wrapper" id="mainpastcontent">
+
+  {% set myFormsCard %}
+    <p>You have <strong>4</strong> pending forms.</p>
+    <p><Strong>Next deadline:</Strong> 15 September 2026</p>
+    <hr class="nhsuk-u-margin-bottom-4 nhsuk-u-margin-top-0">
+    <p>Go to your forms to view all outstanding questionnaires or see past responses.</p>
+  {% endset %}
+
+  {% set myInitiatedFormsCard %}
+    <p>You are all up to date.</p>
+    <hr class="nhsuk-u-margin-bottom-4 nhsuk-u-margin-top-0">
+    <p>Access forms that can be completed by you to report your symptoms to The Christie.</p>
+  {% endset %}
+
+  {% set myApptsCard %}
+    <p><Strong>Next appointment:</Strong> Wednesday 30th September 2026 at 10:30am</p>
+    <hr class="nhsuk-u-margin-bottom-4 nhsuk-u-margin-top-0">
+    <p>Go to your appointments to view all upcoming appointments or see history.</p>
+  {% endset %}
+
+  {% set myLettersCard %}
+    <p>You have <strong>2</strong> new letters.</p>
+    <hr class="nhsuk-u-margin-bottom-4 nhsuk-u-margin-top-0">
+    <p>Go to your letters to view all unread messages or see past documents.</p>
+  {% endset %}
+
+  {% set myFormsCardTag %}
+    <strong class="nhsuk-tag nhsuk-tag--red nhsuk-u-margin-left-2"> Due</strong>
+  {% endset %}
+
+  {% set myLettersCardTag %}
+    <strong class="nhsuk-tag nhsuk-tag--blue nhsuk-u-margin-left-2"> New </strong>
+  {% endset %}
+  
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-full">
+          <ul class="nhsuk-grid-row nhsuk-card-group">
+            <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+              {{ card({
+                clickable: true,
+                variant: "primary",
+                headingHtml: '
+                <span class="nhsuk-card__heading nhsuk-heading-m nhsuk-u-display-flex nhsuk-u-justify-content-space-between nhsuk-u-align-items-center nhsuk-u-margin-bottom-4" style="width: 100%;">
+                  <a class="nhsuk-card__link" href="/forms">My forms</a>
+                  ' + myFormsCardTag + '
+                </span>',
+                headingSize: "m",
+                href: "/forms",
+                descriptionHtml: myFormsCard
+              }) }} 
+            </li>
+            <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+              {{ card({
+                clickable: true,
+                variant: "primary",
+                heading: "My initiated forms",
+                headingSize: "m",
+                href: "/forms",
+                descriptionHtml: myInitiatedFormsCard
+              }) }} 
+            </li>
+            <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+              {{ card({
+                clickable: true,
+                variant: "primary",
+                heading: "My appointments",
+                headingSize: "m",
+                href: "/appointments",
+                descriptionHtml: myApptsCard
+              }) }}
+            </li>
+            <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+              {{ card({
+                clickable: true,
+                variant: "primary",
+                headingHtml: '
+                <span class="nhsuk-card__heading nhsuk-heading-m nhsuk-u-display-flex nhsuk-u-justify-content-space-between nhsuk-u-align-items-center nhsuk-u-margin-bottom-4" style="width: 100%;">
+                  <a class="nhsuk-card__link" href="/prototype-1">My letters</a>
+                  ' + myLettersCardTag + '
+                </span>',
+                headingSize: "m",
+                href: "/prototype-1",
+                descriptionHtml: myLettersCard
+              }) }}
+            </li>
+        <li class="nhsuk-grid-column-one-half nhsuk-card-group__item">
+            {{ card({
+            heading: "My Details",
+            headingSize: "m",
+            description: "View and update your communication preferences.",
+            href: "#",
+            clickable: true,
+            variant: "secondary"
+            }) }}
+        </li>
+        </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

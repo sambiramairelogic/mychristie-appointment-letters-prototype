@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% from "back-link/macro.njk" import backLink %}
+{% from "button/macro.njk" import button %}
+{% from "inset-text/macro.njk" import insetText %}
+{% from "summary-list/macro.njk" import summaryList %}
+{% from "card/macro.njk" import card %}
+{% from "details/macro.njk" import details %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+    {% set apptDetails = [
+      { label: "Hospital service", value: "Radiology" },
+      { label: "Date", value: "Monday 28th September 2026" },
+      { label: "Time", value: "9:00am" },
+      { label: "Location", value: "Oak Rd Treatment Centre (Dept 1)" },
+      { label: "Appointment type", value: "CT scan" }
+    ] %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "/appointments-v2",
+    text: "Back to appointments"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <h1 class="nhsuk-heading-xl">Appointment details</h1>
+
+        {% set detailRows = [] %}
+        {% for item in apptDetails %}
+          {% if item.label == "Date" %}
+              {% set rowValue = item.value + ' <strong class="nhsuk-tag nhsuk-tag--red">Cancelled</strong>' %}
+            {% else %}
+              {% set rowValue = item.value %}
+            {% endif %}
+
+          {% set detailRows = (detailRows.push({
+            key: { text: item.label },
+            value: { html: rowValue }
+          }), detailRows) %}
+        {% endfor %}
+
+        {{ summaryList({
+          rows: detailRows
+        }) }}
+
+
+        <h2 class="nhsuk-heading-l">Get help with this appointment</h2>
+        <p><strong>For CRIS appts:</strong></p>
+        <p>This appointment will not go ahead. For information: </p>
+        <p>Call <a href="tel:01611234567">0161 123 4567</a> from 8am to 5pm</p>
+        <br/>
+        <p><strong>For Mosaiq appts:</strong></p>
+        <p>This appointment will not go ahead. For information: </p>
+        <p>Call <a href="tel:01611234567">0161 123 4567</a> between the hours of 8am to 8pm</p>
+        <p>Or <a href="tel:01619876543">0161 987 6543</a> if out of hours</p>
+
+    </div>
+  </div>
+{% endblock %}

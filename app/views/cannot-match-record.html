@@ -1,0 +1,158 @@
+{% extends "layout.html" %}
+
+{% from "textarea/macro.njk" import textarea %}
+{% from "summary-list/macro.njk" import summaryList %}
+{% from "button/macro.njk" import button %}
+{% from "back-link/macro.njk" import backLink %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block beforeContent %}
+  {{ backLink({
+  href: "/account-create-original",
+  text: "Back to create account"
+}) }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-two-thirds">
+
+      <h1 class="nhsuk-heading-xl">We cannot find your details</h1>
+      <p>The details you entered do not match our records. We cannot create your account right now.</p>
+      <p>You can send a message to our support team to help find your record. We'll include the details you already entered. You do not need to enter them again.</p>
+
+        {{ summaryList({
+        rows: [
+            {
+            key: {
+                text: "Name"
+            },
+            value: {
+                text: "Jane Doe"
+            },
+            actions: {
+                items: [
+                {
+                    href: "/account-create-original",
+                    text: "Change",
+                    visuallyHiddenText: "name"
+                }
+                ]
+            }
+            },
+            {
+            key: {
+                text: "Email"
+            },
+            value: {
+                text: "jane.doe@example.com"
+            },
+            actions: {
+                items: [
+                {
+                    href: "/account-create-original",
+                    text: "Change",
+                    visuallyHiddenText: "name"
+                }
+                ]
+            }
+            },
+            {
+            key: {
+                text: "Mobile phone"
+            },
+            value: {
+                html: "07700 900362"
+            },
+            actions: {
+                items: [
+                {
+                    href: "/account-create-original",
+                    text: "Change",
+                    visuallyHiddenText: "name"
+                }
+                ]
+            }
+            },
+            {
+            key: {
+                text: "NHS number"
+            },
+            value: {
+                html: "5551234567"
+            },
+            actions: {
+                items: [
+                {
+                    href: "/account-create-original",
+                    text: "Change",
+                    visuallyHiddenText: "name"
+                }
+                ]
+            }
+            },
+            {
+            key: {
+                text: "Postcode"
+            },
+            value: {
+                html: "M16 9PL"
+            },
+            actions: {
+                items: [
+                {
+                    href: "/account-create-original",
+                    text: "Change",
+                    visuallyHiddenText: "name"
+                }
+                ]
+            }
+            },
+            {
+            key: {
+                text: "Date of birth"
+            },
+            value: {
+                html: "1 January 1990"
+            },
+            actions: {
+                items: [
+                {
+                    href: "/account-create-original",
+                    text: "Change",
+                    visuallyHiddenText: "name"
+                }
+                ]
+            }
+            }
+        ]
+        }) }}
+
+
+
+        {{ textarea({
+            label: {
+                text: "Is there anything else we should know?",
+                size: "l",
+                isPageHeading: true
+            },
+            hint: {
+                text: "For example, tell us if you have recently changed your name or moved house."
+            },
+            id: "example",
+            name: "example"
+        }) }}
+
+        <div class="nhsuk-button-group">
+        {{ button({
+            text: "Confirm and send",
+            name: "continuebutton",
+            href: "/cannot-match-record-pg2"
+        }) }}
+
+         <a href="/login" class="nhsuk-link">Cancel</a>
+        </div>
+
+
+{% endblock %}

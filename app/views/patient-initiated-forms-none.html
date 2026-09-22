@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% from "breadcrumb/macro.njk" import breadcrumb %}
+{% from "action-link/macro.njk" import actionLink %}
+{% from "tabs/macro.njk" import tabs %}
+{% from "tables/macro.njk" import table %}
+{% from "tag/macro.njk" import tag %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+  {% block content %}
+    <div class="nhsuk-grid-row">
+      <div class="nhsuk-grid-column-full">
+
+        <h1 class="nhsuk-heading-xl">My initiated forms</h1>
+
+    {% set availableContent%}
+    <h2 class="nhsuk-heading-l">Available forms</h2>
+    <p>You have no available forms to view. If you believe you are missing forms, contact your care team for more help.</p>
+
+    {% endset -%}
+
+    {% set completedContent%}
+      <h2 class="nhsuk-heading-l">Completed forms</h2>
+      <p>You have no completed forms to view. If you believe you are missing forms, contact your care team for more help.</p>
+
+    {% endset -%}
+
+
+    {{ tabs({
+      items: [
+      {
+        label: "Available",
+        id: "availableforms",
+        panel: {
+          html: availableContent
+          }
+        },
+        {
+          label: "Completed",
+          id: "completedForms",
+          panel: {
+            html: completedContent
+          }
+        }
+      ]
+    }) }}
+
+
+    </div>
+  </div>
+{% endblock %}

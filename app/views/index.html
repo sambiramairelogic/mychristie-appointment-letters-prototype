@@ -37,24 +37,132 @@
         {{ serviceName }}
       </h1>
 
-      <p>Set the service name for your prototype by editing <strong>/app/config.js</strong>.</p>
-
-      <p>
-        This is the index page for your prototype. You can find it at <strong>/app/views/index.html</strong>.
+      <p>Prototype for My Christie patient portal</strong>.</p>
       </p>
 
       <hr>
 
-      <h2 class="nhsuk-heading-l">
-        Get started
-      </h2>
-
+      <h2 class="nhsuk-heading-l"> Pages </h2>
       <ul class="nhsuk-list nhsuk-list--bullet">
         <li>
-          <a href="https://prototype-kit.service-manual.nhs.uk/how-tos">NHS prototype kit guides</a> – including a tutorial
+          <a href="/home-banner">Home, with banner</a>
+        </li>
+        <ul>
+          <li>
+            <a href="/home">Home, without banner</a>
+          </li>
+          <li>
+            <a href="/home-none">Home, without banner and user up to date</a>
+          </li>
+        </ul>
+        <li>
+          <a href="/login">Main login</a>
+        </li>
+        <ul>
+        <li>
+          <a href="/login-nhs">NHS login</a>
         </li>
         <li>
-          <a href="https://service-manual.nhs.uk/design-system">NHS digital service manual</a> – for code snippets and guidance on using NHS styles, components and patterns
+          <a href="/login-creds">MyChristie login</a>
+        </li>
+        <li>
+          <a href="/login-demog">Questionnaire login</a>
+        </li>
+        </ul>
+        <li>
+          <a href="/my-details">My details</a>
+        </li>
+      </ul>
+
+      <h3 class="nhsuk-heading-m"> Forms pages </h3>
+      <ul class="nhsuk-list nhsuk-list--bullet">
+        <li>
+          <a href="/forms">Forms</a>
+        </li>
+        <ul>
+          <li>
+            <a href="/forms-none">Forms, none to show</a>
+          </li>
+        </ul>
+        <li>
+          <a href="/patient-initiated-forms">Patient initiated forms</a>
+        </li>
+        <ul>
+          <li>
+            <a href="/patient-initiated-forms-none">Patient initiated forms, none to show</a>
+          </li>
+        </ul>
+      </ul>
+
+      <h3 class="nhsuk-heading-m"> Appointments pages </h3>
+      <h4 class="nhsuk-heading-s"> My appointments </h4>
+      <ul class="nhsuk-list nhsuk-list--bullet">
+        <li>
+          <a href="/appointments">Appointments, table design v1</a>
+        </li>
+        <li>
+          <a href="/appointments-v2">Appointments, card design v2</a>
+        </li>
+        <li>
+          <a href="/appointments-none">Appointments, none to show</a>
+        </li>
+        </ul>
+
+      <h4 class="nhsuk-heading-s"> Appointment details </h4>
+      <ul class="nhsuk-list nhsuk-list--bullet">
+        <li>
+          <a href="/appointment-details-careflow">Appointment details - Careflow</a>
+        </li>
+        <li>
+          <a href="/appointment-details-cris">Appointment details - CRIS</a>
+        </li>
+        <li>
+          <a href="/appointment-details-mosaiq-single-phone">Appointment details - Mosaiq phone appointment</a>
+        </li>
+        <li>
+          <a href="/appointment-details-mosaiq-single-f2f">Appointment details - Mosaiq F2F appointment</a>
+        </li>
+        <li>
+          <a href="/appointment-details-mosaiq-schedule-times">Appointment details - Mosaiq schedule with times</a>
+        </li>
+        <li>
+          <a href="/appointment-details-mosaiq-schedule-activity">Appointment details - Mosaiq schedule without times</a>
+        </li>
+      </ul>
+
+      <h5 class="nhsuk-heading-s"> Cancelled appointments </h5>
+      <ul class="nhsuk-list nhsuk-list--bullet">
+        <li>
+          <a href="/appointment-details-cancelled-cf">Cancelled - Careflow</a>
+        </li>
+        <li>
+          <a href="/appointment-details-cancelled">Cancelled - CRIS and single Mosaiq</a>
+        </li>
+        <li>
+          <a href="/appointment-details-cancelled-mosaiq-v1">Cancelled - Mosaiq schedule v1</a>
+        </li>
+        <li>
+          <a href="/appointment-details-cancelled-mosaiq-v2">Cancelled - Mosaiq schedule v2</a>
+        </li>
+      </ul>
+
+      <h3 class="nhsuk-heading-m"> Letters pages </h3>
+      <ul class="nhsuk-list nhsuk-list--bullet">
+        <li>
+          <a href="/prototype-1"> Letters v1</a>
+        </li>
+        <li>
+          <a href="/prototype-2"> Letters v2</a>
+        </li>
+        <li>
+          <a href="/prototype-3"> Letters v3</a>
+        </li>
+      </ul>
+
+      <h3 class="nhsuk-heading-m"> Admin pages </h3>
+      <ul class="nhsuk-list nhsuk-list--bullet">
+        <li>
+          <a href="/admin-manage-users"> Admin - Manage users</a>
         </li>
       </ul>
 

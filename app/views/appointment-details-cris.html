@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+{% from "back-link/macro.njk" import backLink %}
+{% from "button/macro.njk" import button %}
+{% from "inset-text/macro.njk" import insetText %}
+{% from "summary-list/macro.njk" import summaryList %}
+{% from "card/macro.njk" import card %}
+{% from "details/macro.njk" import details %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+    {% set apptDetails = [
+      { label: "Hospital service", value: "Radiology" },
+      { label: "Date", value: "Wednesday 11th August 2026" },
+      { label: "Time", value: "9:00am" },
+      { label: "Location", value: "Oak Rd Treatment Centre (Dept 1)" },
+      { label: "Appointment type", value: "CT scan" }
+    ] %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "/appointments-v2",
+    text: "Back to appointments"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+      <h1 class="nhsuk-heading-xl">Appointment details</h1>
+
+        {% set detailRows = [] %}
+        {% for item in apptDetails %}
+          {% set detailRows = (detailRows.push({
+            key: { text: item.label },
+            value: { text: item.value }
+          }), detailRows) %}
+        {% endfor %}
+
+        {{ summaryList({
+          rows: detailRows
+        }) }}
+
+        {% call details({
+          summaryText: "Add to calendar"
+        }) %}
+        <ul>
+          <li><a href="#">Google</a></li>
+          <li><a href="#">iCal file</a></li>
+          <li><a href="#">Outlook</a></li>
+          <li><a href="#">Microsoft 365</a></li>
+        </ul>
+        {% endcall %}
+
+        {% set cardDescriptionHtml %}
+          <ul>
+            <li>your condition has changed</li>
+            <li>you think you have a different condition</li>
+          </ul>
+        {% endset %}
+
+        {{ card({
+          type: "non-urgent",
+          heading: "Contact your care providers if:",
+          descriptionHtml: cardDescriptionHtml
+        }) }}
+
+        <h2 class="nhsuk-heading-l">Get help with this appointment</h2>
+        <p>If you would like to cancel or re-arrange your appointment, call <a href="tel:01611234567">0161 123 4567</a> from 8am to 5pm.</p>
+
+    </div>
+  </div>
+{% endblock %}

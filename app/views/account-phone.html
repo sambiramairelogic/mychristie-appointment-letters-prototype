@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% from "back-link/macro.njk" import backLink %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "/login",
+    text: "Back to login"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-two-thirds">
+
+      <h1 class="nhsuk-heading-xl">I've lost access to the mobile phone number I use to log in</h1>
+      <p>If you can no longer access the mobile phone number you use to log in, our support team can help.</p>
+      <p>We will update your record with the new mobile phone number.</p>
+      <p>You can contact our support team at <a href="mailto:the-christie.patientportalsupport@nhs.net">the-christie.patientportalsupport@nhs.net</a>.</p>
+
+
+
+{% endblock %}

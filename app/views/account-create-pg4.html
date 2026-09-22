@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% from "error-summary/macro.njk" import errorSummary %}
+{% from "error-message/macro.njk" import errorMessage %}
+{% from "input/macro.njk" import input %}
+{% from "button/macro.njk" import button %}
+{% from "back-link/macro.njk" import backLink %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "/change-phone-pg1",
+    text: "Back to my change phone"
+    })
+  }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-two-thirds">
+
+    <h1 class="nhsuk-heading-xl">Verify your phone number</h1>
+
+          {% set errors %}
+            errors
+          {% endset %}
+
+
+          {% if errors %}
+                {{ errorSummary({
+                  titleText: "There is a problem",
+                  errorList: [
+                    {
+                      text: "Enter the authentication code",
+                      href: "#code"
+                    } if errors,
+                    {
+                      text: "Authentication code does not match",
+                      href: "#code"
+                    } if errors
+                  ]
+                }) }}
+          {% endif %}
+
+        {{ input({
+            label: {
+            text: "Authentication code"
+            },
+            id: "code",
+            name: "code",
+            classes: "nhsuk-input--width-20",
+            errorMessage: {
+            text: "Enter the code sent to your phone"
+            }
+        }) }}
+
+
+          {{ button({
+            text: "Continue",
+            name: "continuebutton",
+            href: "/home"
+          }) }}
+
+{% endblock %}

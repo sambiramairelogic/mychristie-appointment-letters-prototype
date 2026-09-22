@@ -15,12 +15,66 @@
 <!-- Edit the header -->
 <!-- Header code examples can be found at https://service-manual.nhs.uk/design-system/components/header -->
 {% block header %}
-  {{ header({
-    service: {
-      text: serviceName,
-      href: "/"
-    }
-  }) }}
+{% from "header/macro.njk" import header %}
+
+{{ header({
+  logo: {
+    href: "/home",
+    ariaLabel: "NHS My Christie"
+  },
+  organisation: {
+    name: "The Christie",
+    descriptor: "NHS Foundation Trust"
+  },
+  search: {
+    placeholder: "Search",
+    visuallyHiddenLabel: "Search My Christie patient portal"
+  },
+  account: {
+    items: [
+      {
+        text: "Log out",
+        href: "/logout"
+      }
+    ]
+  },
+  navigation: {
+    items: [
+      {
+        text: "Home",
+        href: "/home-banner"
+      },
+      {
+        text: "Forms",
+        href: "/forms"
+      },
+      {
+        text: "Patient initiated forms",
+        href: "/patient-initiated-forms"
+      },
+      {
+        text: "Appointments",
+        href: "/appointments"
+      },
+      {
+        text: "My details",
+        href: "/my-details"
+      },
+      {
+        text: "Letters (1)",
+        href: "/prototype-1"
+      },
+      {
+        text: "Letters (2)",
+        href: "/prototype-2"
+      },
+      {
+        text: "Letters (3)",
+        href: "/prototype-3"
+      }
+    ]
+  }
+}) }}
 {% endblock %}
 
 <!-- Edit the footer -->
@@ -31,16 +85,32 @@
   {% endset %}
 
   {{ footer({
-    meta: {
-      items: [
-        {
-          href: "/",
-          text: "Home"
-        },
-        {
-          href: "/prototype-admin/reset?returnPage=" + (currentPage | urlencode),
-          text: "Reset data"
-        }
+meta: {
+    items: [
+      {
+        href: "/index",
+        text: "Index"
+      },
+      {
+        href: "#",
+        text: "Terms of use"
+      },
+      {
+        href: "#",
+        text: "Privacy policy"
+      },
+      {
+        href: "#",
+        text: "Cookie policy"
+      },
+      {
+        href: "#",
+        text: "Accessibility statement"
+      },
+      {
+        href: "#",
+        text: "Help"
+      }
       ],
       html: metaAboutHtml
     }

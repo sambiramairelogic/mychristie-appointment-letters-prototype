@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% from "error-summary/macro.njk" import errorSummary %}
+{% from "error-message/macro.njk" import errorMessage %}
+{% from "input/macro.njk" import input %}
+{% from "button/macro.njk" import button %}
+{% from "back-link/macro.njk" import backLink %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+{% block beforeContent %}
+  {{ backLink({
+    href: "/my-details",
+    text: "Back to my details"
+    })
+  }}
+{% endblock %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-two-thirds">
+
+        <form action="/configure-app" method="get">
+            <caption class="nhsuk-table__caption nhsuk-u-visually-hidden">Configure two-factor authentication</caption>
+            <h1 class="nhsuk-heading-xl">Configure authenticator app authentication</h1>
+            <p>Would you like to enable Authenticator App Two-Factor Authentication?</p>
+            <p>Authenticator Apps like Google Authenticator, Microsoft Authenticator, etc generate one-time passwords that are used as another way to verify who you are when logging in.</p>
+        </form>
+
+          {{ button({
+            text: "Continue",
+            name: "continuebutton",
+            href: "/configure-auth-pg2"
+          }) }}
+
+        <div>
+          <a href="/my-details" class="nhsuk-link nhsuk-u-margin-top-5">I do not want to configure two-factor authentication</a>
+          </div>
+
+        
+
+{% endblock %}

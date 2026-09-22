@@ -1,0 +1,104 @@
+{% extends "layout.html" %}
+
+{% from "breadcrumb/macro.njk" import breadcrumb %}
+{% from "action-link/macro.njk" import actionLink %}
+{% from "tabs/macro.njk" import tabs %}
+{% from "tables/macro.njk" import table %}
+{% from "tag/macro.njk" import tag %}
+{% from "search-input/macro.njk" import searchInput %}
+{% from "notification-banner/macro.njk" import notificationBanner %}
+
+{% set mainClasses = "nhsuk-main-wrapper--s" %}
+
+
+    {% set manageData = [
+        {"name": "Fanni Whitehead", "christieNum": "202612121", "email": "fwhitehead0@so-net.ne.jp", "emailConfirmed": "FALSE", "phoneNum": "8446954422", "lastLogin": ""},
+        {"name": "Carleen Yoslowitz", "christieNum": "202612345", "email": "cyoslowitz2@123-reg.co.uk", "emailConfirmed": "TRUE", "phoneNum": "5189385041", "lastLogin": "27/01/2026 00:54"},
+        {"name": "Jasper Moiser", "christieNum": "202654321", "email": "jmoiser3@google.nl", "emailConfirmed": "TRUE", "phoneNum": "9944324291", "lastLogin": ""}
+      ] %}
+
+{% block content %}
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+
+          {% set html %}
+      <h3 class="nhsuk-notification-banner__heading">
+        Email has been sent to the user
+      </h3>
+      <p>Example: A password reset email has been sent to <strong>{{manageData[0].name}} ({{manageData[0].email}})</strong>.</p>
+      {% endset %}
+
+      {{ notificationBanner({
+        html: html,
+        type: "success"
+      }) }}
+    
+      <h1 class="nhsuk-heading-xl">Manage patients</h1>
+      <p>Placeholder for managing users text. Recommend adding information text for users.</p>
+
+            {{ searchInput({
+              label: {
+                text: "Search patients",
+                size: "s"
+              },
+              hint: {
+                text: "Search by name, email, or Christie number"
+              },
+              name: "example",
+              id: "example",
+              classes: "nhsuk-input--width-10",
+              value: ""
+            }) }}
+
+
+
+            {% set tableRows = [] %}
+            {% for item in manageData %}
+              {% if item.emailConfirmed == "TRUE" %}
+                {% set actionHtml = '<a class="nhsuk-link" href="/admin-resend-email-error">Send password reset</a>' %}
+                {%set emailBoolHtml = "Yes" %}
+              {% else %}
+                {% set actionHtml = '<a class="nhsuk-link" href="/admin-resend-email-error">Resend invite</a>' %}
+                {%set emailBoolHtml = "No" %}
+              {% endif %}
+                {% set emailHtml = '<a class="nhsuk-link" href="/admin-patient-details">Manage</a>' %}
+
+                {% if item.lastLogin == "" %}
+                {%set activeBoolHtml = "No" %}
+              {% else %}
+                {%set activeBoolHtml = "Yes" %}
+              {% endif %}
+
+                {% set tableRows = (tableRows.push([
+                  { header: "Name", text: item.name },
+                  { header: "Christie number", text: item.christieNum },
+                  { header: "Email", text: item.email },
+                  { header: "Email confirmed", html: emailBoolHtml },
+                  { header: "Phone number", text: item.phoneNum },
+                  { header: "Active", html: activeBoolHtml },
+                  { header: "Action", html: emailHtml + "<br>" + "<br>" + actionHtml } 
+                ]), tableRows) %}
+            {% endfor %}
+            {# Can add if needed { header: "Phone number", text: item.phoneNum }, #}
+
+            {{ table({
+              firstCellIsHeader: false,
+              responsive: true,
+              head: [
+                { text: "Name", classes: "nhsuk-u-width-one-quarter" },
+                { text: "Christie number", classes: "nhsuk-u-width-one-quarter" },
+                { text: "Email", classes: "nhsuk-u-width-one-quarter" },
+                { text: "Email confirmed", classes: "nhsuk-u-width-one-quarter" },
+                { text: "Phone number", classes: "nhsuk-u-width-one-quarter" },
+                { text: "Active", classes: "nhsuk-u-width-one-quarter" },
+                { text: "Action", classes: "nhsuk-u-width-one-quarter" }
+              ],
+              rows: tableRows
+            }) }}
+            {# Can add later if needed { text: "Phone number", classes: "nhsuk-u-width-one-quarter" }, #}
+
+
+
+    </div>
+  </div>
+{% endblock %}
